@@ -1,7 +1,5 @@
 @Library('jenkins_pipeline_library')_
 
-node() {
-    checkout()
-
+ stage('Build') {
     mvn()
 }
