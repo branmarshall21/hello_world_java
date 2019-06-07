@@ -4,7 +4,9 @@ pipeline{
     tools {
         maven 'MAVEN'
     }
-    stage('Build') {
-        mvn()
+    stages{
+        stage('Build') {
+            mvn()
+        }
     }
 }
