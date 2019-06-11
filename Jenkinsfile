@@ -67,21 +67,12 @@ pipeline {
         stage('Sonar') {
 
                   steps {
-                      withSonarQubeEnv('SonarDev') {
-                           sh './gradlew sonarqube -Dsonar.host.url=http://sonar.steadystatecd.com -Dsonar.login=$SONAR_TOKEN'
-
-                        }
+                      echo 'Sonar Analysis'
                   }
 
             }
 
-         stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
+
 
 
         stage('Build Docker') {
@@ -89,11 +80,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'docker build . -t 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:${BUILD_NUMBER}'
-                sh 'docker tag 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:${BUILD_NUMBER} 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:latest'
-                sh '/home/jenkins/ecr-login.sh | /bin/bash '
-                sh 'docker push 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:${BUILD_NUMBER}'
-                sh 'docker push 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:latest'
+                echo 'Build'
             }
         }
 
@@ -104,8 +91,7 @@ pipeline {
             }
 
             steps {
-                 sh 'ecs-deploy -c dev-APICluster -n userapi -i 550522744793.dkr.ecr.us-east-1.amazonaws.com/userapi:${BUILD_NUMBER} -r us-east-1 --timeout 420 '
-
+                echo 'dev deploy when master'
             }
 
         }
