@@ -23,19 +23,7 @@ pipeline {
 
         stage('Build') {
             steps {
-
-
                 echo 'Build'
-                script {
-                    sh 'printenv'
-
-                    repoUrl= gitRepoURL()
-                    branchName = gitBranchName()
-                    ispr = isGitPRBranch()
-                    sh './gradlew clean build'
-
-                }
-
             }
         }
 
@@ -44,13 +32,6 @@ pipeline {
                  parallel(
                         "UnitTest ": {
                             echo 'Run Units tests'
-                                   script {
-                                        if (isGitPRBranch()) {
-                                        setGithubStatus("continuous-integration/jenkins:Unit test","Pending","PENDING")
-                                        def TESTRESULT=sh script: './gradlew test',returnStatus: true
-                                        setGithubStatus("continuous-integration/jenkins:Unit test","Completed","SUCCESS")
-                                        }
-                                    }
                         }
 
                 )
@@ -62,64 +43,20 @@ pipeline {
 
                 parallel(
                         "Lint ": {
-
-                                   script {
-                                        if (isGitPRBranch()) {
-                                        setGithubStatus("continuous-integration/jenkins:Lint","Pending","PENDING")
-
-                                        sh './gradlew lint'
-
-                                        setGithubStatus("continuous-integration/jenkins:Lint","Completed","SUCCESS")
-                                        }
-                                    }
-
+                            echo 'Lint'
                         },
                         "PMD ": {
-
-                                   script {
-                                        if (isGitPRBranch()) {
-                                        setGithubStatus("continuous-integration/jenkins:PMD","Pending","PENDING")
-
-                                        sh './gradlew pmdMain'
-
-                                        setGithubStatus("continuous-integration/jenkins:PMD","Completed","SUCCESS")
-                                        }
-                                    }
-
+                            echo 'PMD'
                         },
                          "CheckStyle ": {
-                                   script {
-                                        if (isGitPRBranch()) {
-                                        setGithubStatus("continuous-integration/jenkins:CheckStyle","Pending","PENDING")
-
-                                        sh './gradlew check'
-
-                                        setGithubStatus("continuous-integration/jenkins:CheckStyle","Completed","SUCCESS")
-                                        }
-                                    }
+                              echo 'Checkstyle'
                         },
                          "FindBugs ": {
-                                   script {
-                                        if (isGitPRBranch()) {
-                                        setGithubStatus("continuous-integration/jenkins:FindBugs","Pending","PENDING")
-
-                                        sh './gradlew findbugsMain'
-
-                                        setGithubStatus("continuous-integration/jenkins:FindBugs","Completed","SUCCESS")
-                                        }
-                                    }
+                             echo "Find Bugs"
                         },
 
                         "OWASP Check": {
-                                   script {
-                                        if (isGitPRBranch()) {
-                                        setGithubStatus("continuous-integration/jenkins:OWASP","Pending","PENDING")
-
-                                        sh './gradlew dependencyCheckAnalyze'
-
-                                        setGithubStatus("continuous-integration/jenkins:OWASP","Completed","SUCCESS")
-                                        }
-                                    }
+                            echo "OWASP Check"
                         }
 
                 )
