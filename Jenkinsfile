@@ -88,22 +88,5 @@ pipeline {
 
 
     }
-    post {
-        echo 'post pipeline status'
 
-        failure {
-            echo 'Failed'
-        }
-
-        success {
-            echo 'Success!'
-
-
-        }
-
-        unstable {
-            echo 'Unstable'
-        }
-
-    }
 }
