@@ -15,7 +15,7 @@ node('master') {
            mavenSettingsConfig: 'my-maven-settings',
            mavenLocalRepo: '.repository') {
            // Run the maven build
-            sh "mvn clean install"
+            sh "mvn clean install -s settings.xml"
          }
      }
  }
