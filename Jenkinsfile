@@ -5,7 +5,7 @@ node('master') {
     }
 
     stage('Build'){
-        echo 'build with mvn'
+        sh 'mvn -B -DskipTests clean package'
     }
 
 
