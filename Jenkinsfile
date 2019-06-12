@@ -4,6 +4,10 @@ node('master') {
         checkout scm
     }
 
+    stage('Build'){
+        echo 'build with mvn'
+    }
+
 
 
 }
