@@ -1,8 +1,3 @@
-
-tools {
-        maven 'MAVEN'
-    }
-
 node('master') {
 
     stage('checkout'){
