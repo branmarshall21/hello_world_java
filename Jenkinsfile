@@ -6,7 +6,7 @@ node('master') {
 
      stage('Build'){
 
-         git url: https://github.com/branmarshall21/hello_world_java.git
+         git url: 'https://github.com/branmarshall21/hello_world_java.git'
          withMaven(
           // Maven installation declared in the Jenkins "Global Tool Configuration"
            maven: 'M3',
