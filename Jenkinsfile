@@ -89,42 +89,7 @@ pipeline {
 
     }
     post {
-        always {
-             publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports/checkstyle',
-                    reportFiles: '*.html',
-                    reportName: "CheckStyle Report"
-                    ])
-               publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports/findbugs',
-                    reportFiles: '*.html',
-                    reportName: "Findbugs Report"
-                    ])
-                   publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports/pmd',
-                    reportFiles: '*.html',
-                    reportName: "PMD Report"
-                    ])
-
-                        publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports',
-                    reportFiles: 'dependency-check-report.html',
-                    reportName: "Dependency Check Report"
-                    ])
-
-        }
+        echo 'post pipeline status'
 
         failure {
             echo 'Failed'
