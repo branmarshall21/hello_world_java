@@ -1,3 +1,5 @@
+@Library('jenkins_pipeline_library')_
+
 pipeline {
     agent any
 
@@ -16,7 +18,7 @@ pipeline {
 
       stage('Checkout') {
             steps {
-                checkout scm
+                checkout()
 
             }
       }
@@ -80,83 +82,11 @@ pipeline {
                 branch 'master'
             }
             steps {
-                echo 'Build'
-            }
-        }
-
-        stage('Dev Deploy') {
-
-                when {
-                branch 'master'
-            }
-
-            steps {
-                echo 'dev deploy when master'
-            }
-
-        }
-
-        stage('DEV Test') {
-            when {
-                branch 'master'
-            }
-            steps {
-
-                parallel(
-                        "Integration Test ": {
-                            echo 'Run integration tests'
-                        },
-                         "Functional Test ": {
-                            echo 'Run integration tests'
-                        }
-
-                )
-            }
-        }
-
-         stage('QA deploy') {
-             when {
-                branch 'master'
-            }
-
-            steps {
-                echo 'Deploy QA'
-                echo 'Sanity Checks'
-            }
-
-        }
-
-        stage('QA Functional Tests') {
-            when {
-                branch 'master'
-            }
-            steps {
-                echo 'Unit Test'
+                echo 'Build Docker image'
             }
         }
 
 
-         stage('Performance TEST') {
-            when {
-                branch 'master'
-            }
-            steps {
-                echo 'Deploy QA'
-                echo 'Sanity Checks'
-            }
-
-        }
-
-
-        stage('Deploy Stage') {
-           when {
-                branch 'master'
-            }
-            steps {
-                echo 'deploy stage'
-                echo ' Stage Sanity Checks'
-            }
-        }
     }
     post {
         always {
