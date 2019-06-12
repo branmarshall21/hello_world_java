@@ -1,5 +1,9 @@
-node('master') {
 
+
+node('master') {
+    tools {
+        maven 'MAVEN'
+    }
     stage('checkout'){
         checkout scm
     }
